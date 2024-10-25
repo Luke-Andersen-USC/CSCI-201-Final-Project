@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&display=swap');
+
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: #FFFFF2;
+    margin: 0;
+	padding: 0;
+}
+
+#nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #85e288;
+
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: 0;
+
+    z-index: 1;
+    list-style-type: none;
+}
+
+#nav li {
+    background-color: #85e288;
+    text-align: center;
+    position: relative;
+    flex: 1;
+}
+
+#nav li:hover {
+    background-color: rgb(7, 118, 11);
+}
+
+#nav li:hover > ul {
+    display: block;
+}
+
+#nav a {
+    text-decoration: none; /* gets rid of hyperlink underline */
+    color: #FfffF2;
+    display: block;
+
+    text-align: center;
+    line-height: 50px; /* we wouldve used padding if we didnt know this was the line height*/
+    border-bottom: 2px solid #FFF; /*invisible line that holds space for the hover border*/
+}
+
+#nav a:hover { /*change anchor tag in nav when I hover over it*/
+    border-bottom: 2px solid rgb(244, 97, 18);
+    color: #FFF;
+}
+
+#nav ul {
+    list-style: none;
+    width: 100%;
+    position: absolute;
+    display: none;
+}
+
+#nav li:hover > ul {
+    display: block;
+}
+
+#active-nav {
+    background-color: rgb(96, 137, 181);
+}
+
+.custom-btn {
+    border-radius: 20px;
+    padding: 10px 20px;
+    background-color: #259489;
+}

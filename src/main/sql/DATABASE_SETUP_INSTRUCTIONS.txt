@@ -1,0 +1,5 @@
+Run create.sql once on your computer to set up the database. If create.sql changes,
+you'll need to drop the schema (last two lines of create.sql) and re-run create.sql
+
+Then change the mySQLusername and mySQLpassword values in JDBCConnector.java to your
+mySQL username and password

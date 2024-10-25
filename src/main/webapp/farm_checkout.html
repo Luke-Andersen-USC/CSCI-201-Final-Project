@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title>Checkout</title>
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/open-iconic@1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="style.css" />
+	<script src="scripts/navbar.js" defer></script>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			min-height: 100vh;
+		}
+
+		#checkout-header {
+			display: flex;
+			align-items: center;
+			top: 0;
+
+			height: 200px;
+			margin-top: 50px;
+			padding: 20px;
+
+			font-size: 4em;
+			color: #FFF;
+
+			background-color: #40db47;
+		}
+
+		h2 {
+			font-size: 2.5em;
+		}
+
+		.cart-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 10px;
+			border-bottom: 1px solid #ddd;
+		}
+
+		.cart-item-image {
+			max-width: 50px;
+			max-height: 50px;
+			margin-right: 10px;
+		}
+
+		.price {
+			margin-right: 10px;
+		}
+
+		.cart-remove {
+			cursor: pointer;
+			color: #CCC;
+			font-size: 20px;
+			/* margin-left: auto;
+        margin-right: 10px; */
+		}
+
+		.cart-remove:hover {
+			color: #dc3545;
+		}
+
+		.cart-remove:active {
+			color: #ba1323;
+		}
+		
+		.checkout-message-container, .error-message-container {
+			margin: 20px;
+		}
+		
+		
+	</style>
+</head>
+
+<body>
+	<ul id="nav">
+		<li><a href="farm_homepage.html"> Marketplace</a></li>
+		<li><a href="farm_profile_vendor.html">Profile</a></li>
+		<li><a id="active-nav" href="farm_checkout.html">Cart</a></li>
+		<li id="login-register"><a href="farm_login.html">Login/Register</a>
+			<ul>
+				<li><a href="farm_login.html">Login</a></li>
+				<li><a href="farm_signup.html">Register</a></li>
+			</ul>
+		</li>
+	</ul>
+	<!-- nav -->
+
+	<h1 id="checkout-header">Checkout</h1>
+	<div class="container">
+		<div class="row mb-5">
+			<h2 class="col-12">Cart</h2>
+
+			<div class="col-12 col-sm-8 mt-3">
+
+				<button id="cart-delete-all" class="btn btn-outline-danger mb-3">Remove All</button>
+
+				<ul id="cart-list" class="list-group">
+					<!-- cart items go here -->
+				</ul>
+
+			</div> <!-- .col -->
+		</div> <!-- .row -->
+
+		<h2 id="total-amount">Total: $0</h2>
+		<button id="checkout" class="btn btn-success">Checkout</button>
+		<div id="checkout-message-container"></div>
+		<div id="error-message-container"></div>
+
+	</div> <!-- .container -->
+
+	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="scripts/addToCart.js"></script>
+	<script>
+		function userLoggedIn() {
+			return sessionStorage.user != undefined && sessionStorage.user != '';
+		}
+
+		if (!userLoggedIn()) {
+			console.log('user not logged in, not showing cart');
+			document.querySelector('.container').innerHTML = `<h1>Please log in to view cart.</h1>`;
+		}
+		else {
+			// get user cart from database and save in sessionStorage
+			$.ajax({
+				url: "Cart",
+				method: "POST",
+				data: {
+					user_id: JSON.parse(sessionStorage.user).user_id,
+					action: 'get'
+				},
+				success: function (data) {
+					renderPage(data);
+				},
+				error: function (xhr, status, error) {
+					// Handle unsuccessful login (e.g., show an error message)
+					$("#username-error").html(xhr.responseText);
+					console.error("couldn't get cart.");
+					event.preventDefault();
+				}
+			});		
+			
+			document.getElementById('checkout').onclick = buyCart;	
+		}
+
+		function buyCart() {
+			console.log('checkout pressed');
+			const user_id = JSON.parse(sessionStorage.user).user_id;
+			
+			// make checkout request
+			$.ajax({
+				url: 'checkout',
+				method: 'POST',
+				data: {
+					user_id: user_id
+				},
+				success: function (result) {
+					console.log('successfully bought cart');
+					document.getElementById('checkout-message-container').innerHTML = `
+						<h2 style="color: green">Success!</h2>
+					`;
+					document.querySelector('#cart-list').innerHTML = '';
+					updateTotal();
+						
+				},
+				error: function (xhr, status, error) {
+					console.log('error checking out: ', xhr.responseText);
+					document.getElementById('error-message-container').innerHTML = `
+						<h3 style="color: red">${xhr.responseText}</h3>
+					`;
+				}
+			});
+		}
+
+	</script>
+
+</body>
+
+</html>

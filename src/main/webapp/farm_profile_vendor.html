@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title>Profile</title>
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/open-iconic@1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="style.css" />
+	<script src="scripts/navbar.js" defer></script>
+	<style>
+		#profile-header {
+			display: flex;
+			align-items: center;
+			top: 0;
+	
+			height: 200px;
+			margin-top: 50px;
+			padding: 20px;
+	
+			font-size: 4em;
+			color: #FFF;
+	
+			background-color: #40db47;
+		}
+		
+		/* label{
+			font-family: "Nunito", Helvetica;
+			font-weight: 500;
+			color: black;
+		} */
+		/* .header-for-profile h1{
+		color: white;
+		font-family: "Nunito", Helvetica;
+		font-size: 60px;
+		} */
+		
+		/* .profile-container{
+			display: flex;
+			flex-direction: row;
+			width: auto;
+			justify-content: space-evenly;
+		} */
+		.profile-container .vendor-name{
+			justify-content: space-between;
+			font-family: "Nunito", Helvetica;
+		 	font-weight: 700;
+		  	color: #2dc64e;
+		  	font-size: 40px;
+		 	letter-spacing: 0;
+		 	line-height: normal;
+		  	right: 20px;
+			
+		}
+		.profile-container .vendor-info {
+	      display: flex;
+	      flex-direction: column;
+	      padding-right: 250px;
+	     
+	    }
+		/* .profile-image {
+			position: relative;
+		  	height: 250px;
+		  	width: 250px;
+		  	background-color: #fbb03b;
+		  	background-image: url(https://c.animaapp.com/jJByVzj4/img/ellipse-58@2x.png);
+		  	background-size: 100% 100%;
+		  	border-radius: 50%;
+		  	z-index: 2;
+		  	top: -50px;
+		} */
+		
+	    .add-product-container {
+	      display: flex;
+	      flex-direction: column;
+	      align-items: center;
+	      padding: 20px;
+	    }
+	    
+	    #form-container{
+	    display:flex;
+	    flex-direction: row;
+	    justify-content:center;
+	    }
+	
+	    .add-product-text {
+	      grid-column: span 2;
+	    }
+	
+	    input {
+	      width: 100%;
+	      padding: 10px;
+	      margin-bottom: 10px;
+	      box-sizing: border-box;
+	    }
+	
+	    input[type="submit"] {
+	      grid-column: span 2;
+	      background-color: #2cc54e;
+	      color: white;
+	      cursor: pointer;
+	    }
+	
+	    .error {
+	      color: red;
+	      margin-top: 5px;
+	    }
+	    .products-container{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		padding: 40px;
+		}
+		
+	 	.products-container .product{
+		  width: 270px;
+		  height: 247px;
+		  background-color: #d9d9d9;
+	  	}
+	  	
+	  	#listing-container{
+	  		display: flex;
+	  		flex-direction: column;
+	  		
+	  	}
+	  	
+	  	#listing-container #header-container{
+	  		display: flex;
+	  		flex-direction: row;
+	  		justify-content: center;
+	  		align-items: center;
+	  		
+	  		
+	  	}
+	  	
+	        .products-container{
+				display: flex;
+				flex-wrap: wrap;
+	  			justify-content: space-between;
+	
+	            font-size: 1.5em;
+			}
+	
+			.product{
+			/* Add shadows to create the "card" effect */
+				box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+				transition: 0.3s;
+				height: auto;
+				width: 25%;
+				margin: 20px;
+	            margin-top: 100px;
+	            padding: 15px;
+			}
+	
+			/* On mouse-over, add a deeper shadow */
+			.product:hover {
+			box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+			}
+	
+			/* Add some padding inside the card container */
+			.card > .container {
+			    padding: 2px 16px;
+			}
+	
+	        .img-container {
+	            display: flex;
+	            justify-content: center;
+	            align-items: center;
+	            width: 325px;
+				height: 325px;
+	
+				overflow: hidden;
+				position: relative;
+	        }
+	
+	        .overlay-image {
+	            display:block;
+	            position: absolute;
+	            width: 50%;
+	        }
+	
+	        .stall-img {
+				display: block;
+				object-fit: cover;
+				height: 100%;
+			}
+	
+	        .marketplace-image{
+	            height: 500px;
+	        }
+	          
+	
+	
+		
+	/* 	.add-product-container {
+			display: flex;
+			flex-direction: column;
+		}
+		
+		.add-product-container h2{
+			font-family: "Nunito", Helvetica;
+		 	font-weight: 700;
+		 	color: #2dc64e;
+		 	
+		}
+		
+		.add-product-container form{
+			display: grid;
+	      grid-template-columns: repeat(2, 1fr);
+	      gap: 10px;
+	      max-width: 400px;
+	      padding: 20px;
+	      border-radius: 8px;
+	      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+		
+	 	  
+		
+		input {
+	      width: 100%;
+	      padding: 10px;
+	      margin-bottom: 10px;
+	      box-sizing: border-box;
+	    }
+	
+	    input[type="submit"] {
+	      grid-column: span 2;
+	      background-color: #2cc54e;
+	      color: white;
+	      cursor: pointer;
+	    } */
+	    
+		
+	</style>
+</head>
+<body>
+	<ul id="nav">
+		<li><a href="farm_homepage.html"> Marketplace</a></li>
+		<li><a id="active-nav" href="farm_profile_vendor.html">Profile</a></li>
+		<li><a href="farm_checkout.html">Cart</a></li>
+		<li id="login-register"><a href="farm_login.html">Login/Register</a>
+			<ul>
+				<li><a href="farm_login.html">Login</a></li>
+				<li><a href="farm_signup.html">Register</a></li>
+			</ul>
+		</li>
+	</ul>
+	<!-- nav -->
+	
+<h1 id="profile-header">Profile</h1>
+
+<div class="container">
+	<div class="user-info">
+      <p class="user-name">Jack</p>
+	  <img src="https://c.animaapp.com/jJByVzj4/img/ellipse-58@2x.png" alt = "Profile Image">
+    </div>
+
+	<div class="add-product-container">
+		<h2>Add a New Product!</h2>
+		<form id="add-product-form" action="add-product" onsubmit="validateForm(event)">
+			<div id="form-container">
+				<div id="one-column">
+					<label for="product-name" class="add-product-text">Product Name:</label>
+					<input type="text" name="product-name" id="productName" placeholder="Product Name">
+			        <span id="productNameError" class="error"></span>
+			        
+			        <label for="price" class="add-product-text">Price:</label>
+			        <input type="text" name="price" id="price" placeholder="Price">
+			        <span id="priceError" class="error"></span>
+				</div>
+				<div id="two-column">
+					<label for="image-url" class="add-product-text">Image URL:</label>
+			        <input type="text" name="image-url" id="imageUrl" placeholder="Image URL">
+			        <span id="imageUrlError" class="error"></span>
+			        
+			        <label for="quantity" class="add-product-text">Quantity:</label>
+			        <input type="text" name="quantity" id="quantity" placeholder="Quantity">
+			        <span id="quantityError" class="error"></span>
+				</div>
+			</div>
+			<div id="button-container">
+					<input type="submit" value="Add-Product">
+			</div>
+		</form>
+	</div>
+</div>
+<div id="listing-container">
+    <div id="header-container">
+        <h2>Listing</h2>
+    </div>
+    <div id="productsContainer" class="products-container">
+		<div class="product">
+            <div class="img-container">
+                <img src="img/stall.png" alt="Stall" style="width:100%" class="stall-img">
+                <img alt="Overlay" id="overlayImage" class="overlay-image">
+            </div>
+			<div class="container">
+				<h4 id="name-text"><b>Item Name</b></h4>
+		 	 	<p id="price-text">Price</p>
+		  		<p id="quantity-text">Quantity</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+ 
+  <script>
+    function validateForm(event) {
+      // Prevent the form from submitting by default
+      event.preventDefault();
+
+      // Reset previous error messages
+      resetErrorMessages();
+
+      // Get form values
+      var productName = document.getElementById('productName').value;
+      var price = document.getElementById('price').value;
+      var imageUrl = document.getElementById('imageUrl').value;
+      var quantity = document.getElementById('quantity').value;
+
+      // Validation for integer values (positive or negative integers)
+      var integerRegex = /^-?\d+$/;
+
+      if (productName.trim() === '' || imageUrl.trim() === '') {
+        showError('productName', 'Please fill in Product Name and Image URL');
+      }
+
+      if (!integerRegex.test(price)) {
+        showError('price', 'Price must be an integer');
+      }
+
+      if (price.trim() === '') {
+        showError('price', 'Price is required');
+      }
+
+      if (!integerRegex.test(quantity)) {
+        showError('quantity', 'Quantity must be an integer');
+      }
+
+      if (quantity.trim() === '') {
+        showError('quantity', 'Quantity is required');
+      }
+
+      if (isFormValid()) {
+    	updateProductDetails(productName, price, imageUrl, quantity);
+        alert('Form submitted successfully!');
+        document.getElementById('add-product-form').reset();
+      }
+    }
+
+    function showError(elementId, errorMessage) {
+      // Display the error message next to the input field
+      var errorElement = document.getElementById(elementId + 'Error');
+      errorElement.textContent = errorMessage;
+    }
+
+    function resetErrorMessages() {
+      // Reset all error messages
+      var errorElements = document.querySelectorAll('.error');
+      errorElements.forEach(function (element) {
+        element.textContent = '';
+      });
+    }
+
+    function isFormValid() {
+      // Check if there are any error messages
+      var errorElements = document.querySelectorAll('.error');
+      for (var i = 0; i < errorElements.length; i++) {
+        if (errorElements[i].textContent !== '') {
+          return false;
+        }
+      }
+      return true;
+      
+    }
+    
+    function updateProductDetails(event) {
+        // Get form values
+        var productName = document.getElementById('productName').value;
+        var price = document.getElementById('price').value;
+        var quantity = document.getElementById('quantity').value;
+        var imageUrl = document.getElementById('imageUrl').value;
+
+        // Get the products container
+        var productsContainer = document.getElementById('productsContainer');
+
+        // Find the last child that is an HTML element
+        var lastProduct = findLastElementChild(productsContainer);
+
+        if (lastProduct) {
+            // Access elements within the last product div using querySelector
+            var nameText = lastProduct.querySelector('#name-text');
+            var priceText = lastProduct.querySelector('#price-text');
+            var quantityText = lastProduct.querySelector('#quantity-text');
+            var overlayImage = lastProduct.querySelector('.overlay-image');
+
+            // Update the cached elements
+            nameText.innerHTML = '<b>' + productName + '</b>';
+            priceText.textContent = 'Price: ' + price;
+            quantityText.textContent = 'Quantity: ' + quantity;
+            overlayImage.src = imageUrl;
+        }
+
+        // Create a new product div
+        var newProductDiv = document.createElement('div');
+        newProductDiv.className = 'product';
+
+        // Update product details dynamically using template literals
+        newProductDiv.innerHTML = `
+            <div class="img-container">
+                <img src="img/stall.png" alt="Stall" style="width:100%" class="stall-img">
+                <img alt="Overlay" id="overlayImage" class="overlay-image">
+            </div>
+            <div class="container">
+                <h4 id="name-text"><b>Item</b></h4>
+                <p id="price-text">Price:</p>
+                <p id="quantity-text">Quantity:</p>
+            </div>
+        `;
+
+        // Append the new product div to the container
+        productsContainer.appendChild(newProductDiv);
+		
+        const params = new URLSearchParams();
+		params.append('name', nameText);
+		params.append('price', priceText);
+		params.append('quantityAvailable', quantityText);
+		params.append('image', overlayImage);
+		params.append('user_id', JSON.parse(sessionStorage).user_id);
+		
+		
+		// Construct URL with parameters
+		const url = "add-product?" + params.toString();
+        fetch(url, {
+        	method: "POST"
+        })
+        	.then(response => {
+        		if (response.ok) {
+        			response.json().then(data => {
+        				sessionStorage.setItem('product', JSON.stringify(data))
+        			});
+        			window.location.href = "farm_profile_vendor.html";
+        		}
+        	})
+        .catch(error => console.error("Error:", error));
+        
+        // Reset the form
+        document.getElementById('add-product-form').reset();
+    }
+
+    function findLastElementChild(parent) {
+        var lastChild = parent.lastChild;
+        while (lastChild && lastChild.nodeType !== 1) {
+            lastChild = lastChild.previousSibling;
+        }
+        return lastChild;
+    }
+
+		
+
+  </script>
+
+</body>
+</html>

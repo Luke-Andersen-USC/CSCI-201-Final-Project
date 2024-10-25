@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Login</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css" />
+	<style>
+		body {
+			background-color: #FFFFF2;
+		}
+
+		#login-page {
+			display: flex;
+			overflow-x: hidden;
+		}
+
+		#header {
+			position: relative;
+			display: flex;
+			align-items: left;
+			margin-top: 50px;
+		}
+
+		#main-text {
+			margin-top: 40px;
+		}
+
+		h1 {
+			position: relative;
+			font-size: 3em;
+			padding-left: 150px;
+			font-family: 'Josefin Sans', sans-serif;
+			font-weight: 400;
+		}
+
+		h2 {
+			position: relative;
+			font-size: 1.5em;
+			font-family: 'Josefin Sans', sans-serif;
+			/* padding-left: 150px; */
+		}
+
+		.login-text {
+			font-size: 1em;
+			font-weight: 300;
+			font-family: 'Josefin Sans', sans-serif;
+		}
+
+		#logo {
+			position: absolute;
+			width: 130px;
+			height: auto;
+			margin-top: 35px;
+			margin-left: 20px;
+		}
+
+		#farmer {
+			width: 315px;
+			height: 455px;
+			top: 100px;
+			position: absolute;
+			right: 100px;
+		}
+
+		#rectangle {
+			position: absolute;
+			width: 35vw;
+			height: 100%;
+			top: 0;
+			right: 0;
+			background-color: #40DB47;
+		}
+
+		.form-group {
+			position: relative;
+			padding-top: 15px;
+		}
+
+		#dont-have-an {
+			margin-top: 50px;
+			font-size: 1.15em;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="login-page" class="row">
+		<div id="rectangle"><img id="farmer" src="img/farmer.png" /></div>
+		<img id="logo" src="SmallerGraphics/logo.png" />
+		<div id="header" class="row offset-1">
+			<h1>Birds & Bees Farmer's Market</h1>
+		</div>
+		<div class="row">
+			<div id="main-text" class="col-4 offset-1">
+				<h2>Welcome Back!</h2>
+
+				<div class="col-12">
+					<form id="login-form" method="POST" action="login">
+						<div class="form-group row">
+							<label for="username" class="login-text col-form-label">Username:</label>
+							<div>
+								<input type="text" name="username" class="form-control" placeholder="Username"
+									id="username">
+
+								<small id="username-error" class="form-text text-danger"></small>
+							</div>
+						</div> <!-- #username .form-group -->
+
+						<div class="form-group row">
+							<label for="password" class="login-text col-form-label">Password:</label>
+							<div>
+								<input type="password" name="password" class="form-control" placeholder="Password"
+									id="password">
+
+								<small id="password-error" class="form-text text-danger"></small>
+							</div>
+						</div> <!-- #password .form-group -->
+
+						<div class="form-group row">
+							<div>
+								<button type="submit" class="btn custom-btn">Login</button>
+							</div> <!-- .col -->
+						</div> <!-- .form-group -->
+					</form> <!-- form -->
+				</div>
+
+				<div id="dont-have-an">
+					<p>Don’t have an account?<br></p>
+					<p><a href="farm_signup.html">Register</a> or <a href="farm_homepage.html">Login as Guest</a></p>
+				</div>
+
+			</div> <!-- #main-text -->
+		</div> <!-- .row -->
+	</div> <!-- #login-page -->
+
+	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+	<script>
+
+		/***** Form Events *****/
+
+		document.querySelector("#login-form").onsubmit = function (event) {
+			console.log("login form submitted")
+			//preventing default redirection
+			event.preventDefault();
+
+			let validForm = true
+
+			/* VALIDATION */
+
+			//validating username
+			const uname = document.querySelector("#username").value.trim()//fetch first name input and get rid of white spaces
+
+			//checks for empty username
+			if (uname.length === 0) {
+				validForm = false;
+				document.querySelector("#username-error").innerHTML = "Username cannot be empty."
+			}
+			else {
+				document.querySelector("#username-error").innerHTML = ""
+			}
+
+			//validating password
+			const password = document.querySelector("#password").value.trim()
+			//checking if password is empty
+			if (/^$/.test(password)) {
+				validForm = false;
+				document.querySelector("#password-error").innerHTML = "Password cannot be empty."
+			}
+			else {
+				document.querySelector("#password-error").innerHTML = ""
+			}
+
+			if (validForm) {
+				// If the form is valid call the submitForm function to send to database and authenticate
+				submitForm(event);
+			} else {
+				// If the form is not valid, prevent default form submission
+				event.preventDefault();
+			}
+		}
+
+
+		/*FORM SENDING TO DATABASE*/
+		function submitForm(event) {
+			const username = $("#username").val().trim();
+			const password = $("#password").val().trim();
+
+			// Construct data object
+			const data = {
+				username: username,
+				password: password
+			};
+
+			// Make the AJAX request
+			$.ajax({
+				url: "login",
+				method: "POST",
+				data: data,
+				success: function (user) {
+					// If login is successful, store user in sessionStorage and redirect to homepage
+					sessionStorage.setItem('user', user);
+					window.location.href = 'farm_homepage.html';
+									
+				},
+				error: function (xhr, status, error) {
+					// Handle unsuccessful login (e.g., show an error message)
+					$("#username-error").html(xhr.responseText);
+					console.error("Login failed.");
+					event.preventDefault();
+				}
+			});
+
+
+		}
+
+	</script>
+
+</body>
+
+</html>

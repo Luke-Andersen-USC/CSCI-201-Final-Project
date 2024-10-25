@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <style>
+  #login-page {
+    display: flex;
+    overflow-x: hidden;
+  }
+  #header {
+    position: relative;
+    display: flex;
+    align-items: left;
+    margin-top: 50px;
+  }
+  #main-text {
+    margin-top: 40px;
+  }
+  h1 {
+    position: relative;
+    font-size: 3em;
+    padding-left: 150px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+  }
+  h2 {
+    position: relative;
+    font-size: 2em;
+    font-family: 'Josefin Sans', sans-serif;
+  }
+  #logo {
+    position: absolute;
+    width: 130px;
+    height: auto;
+    margin-top: 35px;
+    margin-left: 20px;
+  }
+  #stall {
+    /* width: 315px; */
+    height: 650px;
+    /* top: 100px; */
+    position: absolute;
+    /* left: 0px; */
+    right: 0px;
+    bottom: 0px;
+    /* right: 100px; */
+  }
+  #rectangle {
+    position: absolute;
+    width: 45vw;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background-color: #40DB47;
+  }
+  p {
+    font-size: 1.75em;
+  }
+  </style>
+</head>
+<body>
+  <div id="success-page" class="row">
+    <div id="rectangle"><img id="stall" src="img/success-stall.png"/></div>
+    <img id="logo" src="SmallerGraphics/logo.png"/>
+      <div id="header" class="row offset-1">
+        <h1>Birds and Bees Farmer's Market</h1>
+      </div>
+    <div class="row">
+      <div id="main-text" class="col-4 offset-1">
+        <h2>Registration Successful!</h2>
+        
+        <p><a href="farm_login.html">Login</a> here.</p>
+      </div> <!-- #main-text -->
+    </div> <!-- .row -->
+  </div> <!-- #success-page -->
+
+</body> 
+</html>

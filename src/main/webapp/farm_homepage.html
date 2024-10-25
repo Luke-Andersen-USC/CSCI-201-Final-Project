@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title>Homepage</title>
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/open-iconic@1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="style.css" />
+	<script src="scripts/navbar.js" defer></script>
+
+	<title>Birds and Bees Market Place</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		h2 {
+			text-align: center;
+		}
+
+		.header img {
+			height: 50px;
+		}
+
+		.marketplace-image {
+			width: 100%;
+			height: auto;
+			display: block;
+		}
+
+		.marketplace-header {
+			text-align: center;
+			font-size: 2em;
+			margin: 20px 0;
+		}
+
+		.card-container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+
+			font-size: 1.5em;
+		}
+
+		.card {
+			/* Add shadows to create the "card" effect */
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+			transition: 0.3s;
+			height: auto;
+			width: 25%;
+			margin: 20px;
+			margin-top: 100px;
+			padding: 15px;
+		}
+
+		/* On mouse-over, add a deeper shadow */
+		.card:hover {
+			box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+		}
+
+		/* Add some padding inside the card container */
+		.card>.container {
+			padding: 2px 16px;
+		}
+
+		.img-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 325px;
+			height: 325px;
+
+			overflow: hidden;
+			position: relative;
+		}
+
+		.overlay-image {
+			display: block;
+			position: absolute;
+			width: 50%;
+		}
+
+		.stall-img {
+			display: block;
+			object-fit: cover;
+			height: 100%;
+		}
+
+		.marketplace-image {
+			height: 500px;
+		}
+	</style>
+</head>
+
+<body>
+	<ul id="nav">
+		<li><a id="active-nav" href="farm_homepage.html"> Marketplace</a></li>
+		<li><a href="farm_profile_vendor.html">Profile</a></li>
+		<li><a href="farm_checkout.html">Cart</a></li>
+		<li id="login-register"><a href="farm_login.html">Login/Register</a>
+			<ul>
+				<li><a href="farm_login.html">Login</a></li>
+				<li><a href="farm_signup.html">Register</a></li>
+			</ul>
+		</li>
+	</ul>
+	<!-- nav -->
+
+	<img src="img/marketplace_home.png" alt="Farmer's Market" class="marketplace-image">
+
+	<h2 class="marketplace-header">Birds & Bees Marketplace</h2>
+
+	<div class="container">
+		<div class="row">
+			<div class="card-container">
+				<div class="card">
+					<div class="img-container">
+						<img src="img/stall.png" alt="Stall" style="width:100%" class="stall-img">
+						<img src="img/fruit1.png" alt="Overlay" class="overlay-image">
+					</div>
+
+					<div class="container">
+						<h4><b>Item Name</b></h4>
+						<p>Item Price</p>
+						<p>Quantity</p>
+						<button type="submit" class="btn custom-btn">Add to Cart</button>
+					</div>
+				</div>
+				<div class="card">
+					<div class="img-container">
+						<img src="img/stall.png" alt="Stall" style="width:100%" class="stall-img">
+						<img src="img/fruit2.png" alt="Overlay" class="overlay-image">
+					</div>
+					<div class="container">
+						<h4><b>Item Name</b></h4>
+						<p>Item Price</p>
+						<p>Quantity</p>
+						<button type="submit" class="btn custom-btn">Add to Cart</button>
+					</div>
+				</div>
+				<div class="card">
+					<div class="img-container">
+						<img src="img/stall.png" alt="Stall" style="width:100%" class="stall-img">
+						<img src="img/fruit3.png" alt="Overlay" class="overlay-image">
+					</div>
+					<div class="container">
+						<h4><b>Item Name</b></h4>
+						<p>Item Price</p>
+						<p>Quantity</p>
+						<button type="submit" class="btn custom-btn">Add to Cart</button>
+					</div>
+				</div>
+				<div class="card">
+					<div class="img-container">
+						<img src="img/stall.png" alt="Stall" style="width:100%" class="stall-img">
+						<img src="img/fruit4.png" alt="Overlay" class="overlay-image">
+					</div>
+					<div class="container">
+						<h4><b>Item Name</b></h4>
+						<p>Item Price</p>
+						<p>Quantity</p>
+						<button type="submit" class="btn custom-btn">Add to Cart</button>
+					</div>
+				</div>
+			</div> <!-- .card-container -->
+
+		</div> <!-- .row -->
+		<!-- Add more stalls as needed -->
+	</div>
+
+	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+	<script>
+		
+		function addToCart(product) {	
+			// send request to server to add item to cart.
+			$.ajax({
+				url: "Cart",
+				method: "POST",
+				data: {
+					action: 'add',
+					product_id: product.product_id,
+					user_id: JSON.parse(sessionStorage.user).user_id,
+					quantity: 1
+				},
+				success: function (data) {
+					console.log('sent cart item to the server');
+				},
+				error: function (xhr, status, error) {
+					// Handle unsuccessful login (e.g., show an error message)
+					$("#username-error").html(xhr.responseText);
+					console.error("couldn't get cart.");
+					event.preventDefault();
+				}
+			});
+		}
+
+		function userLoggedIn() {
+			return sessionStorage.user != undefined && sessionStorage.user != '';
+		}
+
+
+		function createCard(product) {
+			const card = document.createElement('div')
+			const imgContainer = document.createElement('div')
+			const imgStall = document.createElement('img')
+			const img = document.createElement('img')
+			const txtContainer = document.createElement('div')
+			const title = document.createElement('h4')
+			const titleBold = document.createElement('b')
+			const price = document.createElement('p')
+			const quantity = document.createElement('p')
+			const addToCartButton = document.createElement('button')
+
+			card.classList.add('card')
+			imgContainer.classList.add('img-container')
+			txtContainer.classList.add('container')
+
+			imgStall.src = 'img/stall.png'
+			imgStall.alt = 'Stall'
+			imgStall.classList.add('stall-img')
+			imgStall.style.width = '100%'
+
+			img.src = 'img/' + product.image_url;
+			img.alt = product.name + ' Product Image'
+			img.classList.add('overlay-image')
+
+			titleBold.innerHTML = product.name
+			price.innerHTML = 'Price: $' + product.price
+			quantity.innerHTML = 'Quantity: ' + product.quantity
+
+			addToCartButton.innerHTML = 'Add to Cart'
+			addToCartButton.classList.add('btn', 'custom-btn')
+			addToCartButton.type = 'submit'
+			addToCartButton.onclick = function () {
+				addToCart(product);
+			};
+
+			title.appendChild(titleBold)
+
+			imgContainer.appendChild(imgStall)
+			imgContainer.appendChild(img)
+
+			txtContainer.appendChild(title)
+			txtContainer.appendChild(price)
+			txtContainer.appendChild(quantity)
+
+			if (userLoggedIn()) {
+				txtContainer.appendChild(addToCartButton);
+			}
+
+			card.appendChild(imgContainer)
+			card.appendChild(txtContainer)
+
+			document.querySelector(".card-container").appendChild(card)
+		} // createCard
+
+
+		// Function to fetch products from the server and create cards on page load
+		$(document).ready(function () {
+			$.ajax({
+				url: "home",
+				dataType: "json",
+				success: function (result) {
+					console.log(result);
+
+					// Clear before showing results
+					document.querySelector(".card-container").innerHTML = '';
+
+					// Create Cards
+					for (product of result) {
+						createCard(product);
+					}
+				},
+				error: function (error) {
+					console.log(error);
+					alert("AJAX error");
+				}
+			});
+		});
+	</script>
+
+</body>
+
+</html>

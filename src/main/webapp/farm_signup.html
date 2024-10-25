@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Sign Up</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #register-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #image-container {
+            width: 35vw;
+            height: 100%;
+            float: left;
+        }
+
+        #header {
+            position: relative;
+            display: flex;
+            align-items: right;
+            margin-top: 50px;
+        }
+
+        #logo {
+            width: 100px;
+            height: auto;
+            display: block;
+            margin-right: 20px
+        }
+
+        #rectangle {
+            width: 100%;
+            height: 100%;
+            background-color: #40db47;
+        }
+
+        #farmer {
+          width: 315px;
+	      height: 455px;
+	      top: 100px;
+	      position: absolute;
+	      left: 100px;
+        }
+
+        #form-container {
+            float: left;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 50%;
+            padding: 20px;
+            margin: auto;
+        }
+
+        #signup-form {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .login-text {
+            font-size: 1em;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 300;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #1f7a23;
+        }
+
+        .text-danger {
+            font-size: 14px;
+            color: red;
+            margin-top: 5px;
+        }
+
+        .btn {
+            border-radius: 20px;
+            padding: 10px 20px;
+            background-color: #1f7a23;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+        }
+        
+        p {
+            font-size: 1.2em;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="register-page">
+        <div id="image-container">
+            <div id="rectangle"></div>
+            <img id="farmer" src="img/farmer.png" alt="Farmer Image">
+        </div>
+        
+        <div id="form-container">
+            <div id="header" class="row">
+                <img id="logo" src="SmallerGraphics/logo.png"/>
+                <h1>Birds & Bees Farmer's Market</h1>
+            </div>
+            <h2>Please Fill out form to Register!</h2>
+            <form id="signup-form" method="POST" action="signup">
+                <div class="form-group">
+                    <label for="username" class="login-text">Username:</label>
+                    <input type="text" name="username" class="form-control" placeholder="Username" id="username">
+                    <small id="username-error" class="form-text text-danger"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="login-text">Password:</label>
+                    <input type="password" name="password" class="form-control" placeholder="Password" id="password">
+                    <small id="password-error" class="form-text text-danger"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password" class="login-text">Confirm Password:</label>
+                    <input type="password" name="confirm-password" class="form-control"
+                        placeholder="Confirm Password" id="confirm-password">
+                    <small id="confirm-password-error" class="form-text text-danger"></small>
+                </div>
+
+				<div class="form-group">
+					<label for="account-type" class="login-text">Account Type</label>
+	                <select name="account-type" class="form-control" id="account-type" default="0">
+					    <option value="0">Bird (Buyer)</option>
+					    <option value="1">Bee (Vendor)</option>
+					</select>
+				</div>
+
+                <button type="submit" class="btn custom-btn">Register</button>
+            </form>
+
+            <div>
+                <p>Don’t want to register?<br></p>
+                <p><a href="farm_homepage.html">Login as Guest</a></p>
+            </div>
+        </div>
+        
+	    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src = "scripts/signup_validation.js"></script>
+
+        <script>
+
+            document.querySelector("#signup-form").onsubmit = function (event) {
+			    console.log("form submitted")
+                //preventing default redirection
+                event.preventDefault();
+
+                let validForm = true
+
+			    /* VALIDATION */
+                let username = document.getElementById('username').value;
+                let password = document.getElementById('password').value;
+                let confirmPassword = document.getElementById('confirm-password').value;
+                
+                if (username.length < 6) {
+                    document.getElementById('username-error').innerText = 'Username must be at least 6 characters.';
+                    validForm = false;
+                }
+                //checks for capital letter
+                else if(!/[A-Z]/.test(username)) {
+                    validForm = false;
+                    document.querySelector("#username-error").innerHTML = "Username must contain a capital letter."
+                } else {
+                    document.querySelector("#username-error").innerHTML = ""
+                }
+                
+                if (password.length < 7) {
+                    validForm = false;
+                    document.getElementById('password-error').innerText = 'Password must be at least 8 characters long.';
+                }
+                else if (password !== confirmPassword) {
+                    validForm = false;
+				    document.querySelector("#password-error").innerHTML = "Passwords do not match."
+                }
+                else if (!isValidPassword(password)){
+				    validForm = false;
+				    document.querySelector("#password-error").innerHTML = "Insecure password. Password must contain at least one: uppercase character, lowercase character, number, and special character."
+			    }
+                else {
+				    document.querySelector("#password-error").innerHTML = ""
+			    }
+
+                if (validForm) {
+				// If the form is valid call the submitForm function to send to database and authenticate
+					submitForm(event);
+                } else {
+                    // If the form is not valid, prevent default form submission
+                    event.preventDefault();
+                }
+            }
+
+            /*FORM SENDING TO DATABASE*/
+            function submitForm(event) {
+                const username = $("#username").val().trim();
+                const password = $("#password").val().trim();
+                const account_type = $("#account-type").val();
+
+                // Construct data object
+                const data = {
+                    username: username,
+                    password: password,
+                    account_type: account_type
+                };
+
+                // Make the AJAX request
+                $.ajax({
+                    url: "signup",
+                    method: "POST",
+                    data: data,
+                    success: function (data) {
+                        // If signup is successful, store user in sessionStorage and redirect to confirmation page
+                        sessionStorage.setItem('user', JSON.stringify(data));
+                        window.location.href = "farm_signup_confirmation.html";
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle unsuccessful signup (e.g., show an error message)
+                        $("#username-error").html(xhr.responseText);
+                        console.error("Signup failed.");
+                        event.preventDefault();
+                    }
+                });
+            }
+        </script>
+    </div>
+</body>
+</html>
